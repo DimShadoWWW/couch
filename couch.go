@@ -279,7 +279,7 @@ func (db *Database) InsertBulk(bulk *Bulk, allOrNothing bool) (*Bulk, error) {
 
 // Generic CouchDB request. If CouchDB returns an error description, it
 // will not be unmarshaled into response but returned as a regular Go error.
-func Do(url, method string, cred *Credentials, body, response interface{}) (*http.Response, error) {
+func Do(urlUnescaped, method string, cred *Credentials, body, response interface{}) (*http.Response, error) {
 
 	// Prepare json request body
 	var bodyReader io.Reader
@@ -292,14 +292,14 @@ func Do(url, method string, cred *Credentials, body, response interface{}) (*htt
 	}
 
 	// Prepare request
-	req, err := http.NewRequest(method, url, bodyReader)
+	req, err := http.NewRequest(method, url.QueryEscape(urlUnescaped), bodyReader)
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 	if cred != nil {
-		req.SetBasicAuth(cred.user, cred.password)
+		req.SetBasicAuth(url.QueryEscape(cred.user), url.QueryEscape(cred.password))
 	}
 
 	// Make request

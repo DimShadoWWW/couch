@@ -292,7 +292,7 @@ func Do(urlUnescaped, method string, cred *Credentials, body, response interface
 	}
 
 	// Prepare request
-	req, err := http.NewRequest(method, url.QueryEscape(urlUnescaped), bodyReader)
+	req, err := http.NewRequest(method, urlUnescaped, bodyReader)
 	if err != nil {
 		return nil, err
 	}

@@ -1,14 +1,14 @@
 package couch
 
 // CouchDB Design Document (not yet public)
-type design struct {
+type Design struct {
 	Doc
-	Views map[string]view `json:"views"`
+	Views map[string]View `json:"views"`
 	// There a more elements to a design document, they will be added when they are implemented
 }
 
 // CouchDB View (not yet public)
-type view struct {
+type View struct {
 	Map    string `json:"map,omitempty"`
 	Reduce string `json:"reduce,omitempty"`
 }
@@ -46,9 +46,9 @@ func (db *Database) Query(designID, viewID string, options map[string]interface{
 }
 
 // Create a new design document (not yet public)
-func newDesign() *design {
-	d := &design{}
-	d.Views = make(map[string]view)
+func NewDesign() *Design {
+	d := &Design{}
+	d.Views = make(map[string]View)
 	return d
 }
 

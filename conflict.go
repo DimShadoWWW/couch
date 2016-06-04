@@ -153,10 +153,10 @@ func (db *Database) ensureConflictView(forceView bool) error {
 // Inserts a design document with a view containting a map function to collect
 // document ids with conflicts and a reduce function to count them.
 func (db *Database) createConflictView() error {
-	view := view{}
+	view := View{}
 	view.Map = `function(doc) { if (doc._conflicts) { emit(null, null); } }`
 	view.Reduce = `_count`
-	design := newDesign()
+	design := NewDesign()
 	design.Views["all"] = view
 	design.SetIDRev("_design/"+ConflictsDesignID, "")
 	err := db.Insert(design)

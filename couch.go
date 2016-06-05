@@ -298,6 +298,7 @@ func Do(url, method string, cred *Credentials, body, response interface{}) (*htt
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Referer", url)
 	if cred != nil {
 		req.SetBasicAuth(cred.user, cred.password)
 	}

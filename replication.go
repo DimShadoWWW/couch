@@ -62,6 +62,35 @@ func (t Task) HasReplicationID(id string) bool {
 	return strings.HasPrefix(s, id)
 }
 
+func (t Task) GetReplicationID() (string, bool) {
+	s, b := t["replication_id"]
+	return s.(string), b
+}
+
+func (t Task) GetSource() string {
+	s, b := t["source"]
+	if !b {
+		return ""
+	}
+	return s.(string)
+}
+
+func (t Task) GetTarget() string {
+	s, b := t["target"]
+	if !b {
+		return ""
+	}
+	return s.(string)
+}
+
+func (t Task) HasTarget(database *Database) bool {
+	s, b := t["target"]
+	if !b {
+		return false
+	}
+	return s.(string) == database.urlWithCredentials()+"/"
+}
+
 // func (t Task) Replication(relativeTo *Server) *Replication {
 // 	var r *Replication
 // 	if t.isReplication() {

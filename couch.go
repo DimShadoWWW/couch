@@ -45,6 +45,23 @@ func (s *Server) ActiveTasks() ([]Task, error) {
 	return tasks, err
 }
 
+func (s *Server) CancelTask(t Task) error {
+	rid, ok := t.GetReplicationID()
+	if !ok {
+		return errors.New("Error cancelling task")
+	}
+
+	req := struct {
+		ReplicationId string `json:"replication_id"`
+		Cancel        bool   `json:"cancel"`
+	}{
+		rid, true,
+	}
+
+	_, err := Do(s.URL()+"/_replicate", "POST", s.cred, req, nil)
+	return err
+}
+
 // Credentials represents access credentials.
 type Credentials struct {
 	user     string

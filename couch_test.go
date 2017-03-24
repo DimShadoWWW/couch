@@ -9,10 +9,10 @@ import (
 
 // Most tests are integration tests that need a running CouchDB
 var (
-	testHost                      = "http://localhost:5984"
+	testHost                      = "http://localhost:59844"
 	testDB                        = "couch_test_go"
 	testReplDB                    = "couch_test_repl"
-	testCred   *couch.Credentials = nil //NewCredentials("much", "safe")
+	testCred   *couch.Credentials = NewCredentials("ed", "#Plum8um")
 )
 
 type Person struct {
